@@ -1,0 +1,182 @@
+<?php
+
+/**
+ * Copyright - elgentos ecommerce solutions (https://elgentos.nl)
+ */
+
+declare(strict_types=1);
+
+namespace Elgentos\PrismicIO\Renderer;
+
+use Elgentos\PrismicIO\Exception\ApiNotEnabledException;
+use Elgentos\PrismicIO\Model\Api;
+use Elgentos\PrismicIO\Registry\CurrentDocument;
+use Magento\Framework\Controller\Result\ForwardFactory;
+use Magento\Framework\Controller\Result\RedirectFactory;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\View\Result\PageFactory;
+use stdClass;
+
+class Page
+{
+    /** @var ForwardFactory */
+    protected $forwardFactory;
+
+    /** @var RedirectFactory */
+    private $redirectFactory;
+
+    /** @var PageFactory */
+    private $pageFactory;
+
+    /** @var Api */
+    private $api;
+
+    /** @var CurrentDocument */
+    private $currentDocument;
+
+    /**
+     * Constructor.
+     *
+     * @param ForwardFactory  $forwardFactory
+     * @param RedirectFactory $redirectFactory
+     * @param PageFactory     $pageFactory
+     * @param Api             $api
+     * @param CurrentDocument $currentDocument
+     */
+    public function __construct(
+        ForwardFactory $forwardFactory,
+        RedirectFactory $redirectFactory,
+        PageFactory $pageFactory,
+        Api $api,
+        CurrentDocument $currentDocument
+    ) {
+        $this->forwardFactory  = $forwardFactory;
+        $this->redirectFactory = $redirectFactory;
+        $this->pageFactory     = $pageFactory;
+        $this->api             = $api;
+        $this->currentDocument = $currentDocument;
+    }
+
+    /**
+     * Render the page by the given UID
+     *
+     * @param string      $uid
+     * @param string|null $contentType
+     *
+     * @return ResultInterface
+     * @throws ApiNotEnabledException
+     * @throws NoSuchEntityException
+     */
+    public function renderPageByUid(
+        string $uid,
+        string $contentType = null
+    ): ResultInterface {
+        if (!$uid) {
+            return $this->forwardNoRoute();
+        }
+
+        if (!$this->api->isActive()) {
+            return $this->forwardNoRoute();
+        }
+
+        $document = $this->api->getDocumentByUid($uid, $contentType);
+
+        if (!$document) {
+            return $this->forwardNoRoute();
+        }
+
+        if ($document->uid !== $uid) {
+            return $this->redirectUid($uid);
+        }
+
+        return $this->createPage($document);
+    }
+
+    /**
+     * Render the page by the given ID
+     *
+     * @param string $id
+     *
+     * @return ResultInterface
+     * @throws ApiNotEnabledException
+     * @throws NoSuchEntityException
+     */
+    public function renderPageById(string $id): ResultInterface
+    {
+        if (!$id) {
+            return $this->forwardNoRoute();
+        }
+
+        if (!$this->api->isActive()) {
+            return $this->forwardNoRoute();
+        }
+
+        $document = $this->api->getDocumentById($id);
+
+        if (!$document) {
+            return $this->forwardNoRoute();
+        }
+
+        return $this->createPage($document);
+    }
+
+    /**
+     * Forward the request to the no route page
+     *
+     * @return ResultInterface
+     */
+    public function forwardNoRoute(): ResultInterface
+    {
+        $resultForward = $this->forwardFactory->create();
+        $resultForward->forward('noroute');
+
+        return $resultForward;
+    }
+
+    /**
+     * Redirect the request to the UID page
+     *
+     * @param string $uid
+     *
+     * @return ResultInterface
+     */
+    public function redirectUid(string $uid): ResultInterface
+    {
+        $resultRedirect = $this->redirectFactory->create();
+        $resultRedirect->setPath(
+            '*/*/*',
+            [
+                '_use_rewrite' => false,
+                '_current' => true,
+                'uid' => $uid
+            ]
+        );
+        $resultRedirect->setHttpResponseCode(301);
+
+        return $resultRedirect;
+    }
+
+    /**
+     * Create he page by the given document and add the required handles
+     *
+     * @param stdClass $document
+     *
+     * @return ResultInterface
+     */
+    private function createPage(stdClass $document): ResultInterface
+    {
+        $this->currentDocument->setDocument($document);
+
+        $page = $this->pageFactory->create();
+        $page->addHandle(
+            [
+            'prismicio_default',
+            'prismicio_by_type_' . $document->type,
+            'prismicio_by_uid_' . $document->uid,
+            ]
+        );
+
+        return $page;
+    }
+}
