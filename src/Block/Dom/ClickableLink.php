@@ -19,8 +19,6 @@ class ClickableLink extends Link
      * Get the document view as a clickable link.
      *
      * @return string
-     * @throws ContextNotFoundException
-     * @throws DocumentNotFoundException
      */
     public function fetchDocumentView(): string
     {

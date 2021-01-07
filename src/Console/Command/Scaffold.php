@@ -209,7 +209,6 @@ class Scaffold extends Command
      * @param string $fileTypeMask
      *
      * @return void
-     * @throws FileSystemException
      */
     private function copyStubs(string $type, string $fileTypeMask): void
     {

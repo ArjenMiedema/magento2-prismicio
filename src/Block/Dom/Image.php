@@ -17,8 +17,6 @@ class Image extends Raw
      * Get the document view as an image tag.
      *
      * @return string
-     * @throws ContextNotFoundException
-     * @throws DocumentNotFoundException
      */
     public function fetchDocumentView(): string
     {

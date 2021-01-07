@@ -21,8 +21,6 @@ class LinkWithTrailingSlash extends Link
      * Fetch the URL and add a trailing slash
      *
      * @return string
-     * @throws ContextNotFoundException
-     * @throws DocumentNotFoundException
      */
     public function fetchDocumentView(): string
     {

@@ -65,8 +65,6 @@ class Page
      * @param string|null $contentType
      *
      * @return ResultInterface
-     * @throws ApiNotEnabledException
-     * @throws NoSuchEntityException
      */
     public function renderPageByUid(
         string $uid,
@@ -99,8 +97,6 @@ class Page
      * @param string|null $contentType
      *
      * @return ResultInterface
-     * @throws ApiNotEnabledException
-     * @throws NoSuchEntityException
      */
     public function renderPageBySingleton(string $contentType = null): ResultInterface
     {
@@ -123,8 +119,6 @@ class Page
      * @param string $id
      *
      * @return ResultInterface
-     * @throws ApiNotEnabledException
-     * @throws NoSuchEntityException
      */
     public function renderPageById(string $id): ResultInterface
     {
