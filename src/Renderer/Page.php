@@ -94,6 +94,30 @@ class Page
     }
 
     /**
+     * Render the page based on the given content type.
+     *
+     * @param string|null $contentType
+     *
+     * @return ResultInterface
+     * @throws ApiNotEnabledException
+     * @throws NoSuchEntityException
+     */
+    public function renderPageBySingleton(string $contentType = null): ResultInterface
+    {
+        if (!$this->api->isActive()) {
+            return $this->forwardNoRoute();
+        }
+
+        $document = $this->api->getSingleton($contentType);
+
+        if (!$document) {
+            return $this->forwardNoRoute();
+        }
+
+        return $this->createPage($document);
+    }
+
+    /**
      * Render the page by the given ID
      *
      * @param string $id

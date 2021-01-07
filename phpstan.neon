@@ -10,3 +10,4 @@ parameters:
         - '#(class|type) Elgentos\\TestFramework#i'
         - '#(class|type) Elgentos\\\S*Factory#i'
         - '#(method) Magento\\Framework\\App\\RequestInterface#i'
+        - '#Elgentos\\PrismicIO\\Console\\Command\\Scaffold::\$themeList#i'

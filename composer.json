@@ -55,7 +55,8 @@
             "/phpmd.xml",
             "/package.json",
             "/.eslintrc.json",
-            "/.eslintignore"
+            "/.eslintignore",
+            "/tests"
         ]
     },
     "config": {
