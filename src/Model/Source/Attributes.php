@@ -44,7 +44,6 @@ class Attributes implements ArrayInterface
         $attributeCollection = $this->attributeCollectionFactory->create();
 
         if (!$this->options) {
-            /** @var Attribute $attribute */
             $this->options = array_map(
                 function (Attribute $attribute) {
                     return [

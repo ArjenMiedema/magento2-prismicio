@@ -15,7 +15,6 @@ use Prismic\Dom\Link as PrismicLink;
 
 class Link extends AbstractBlock
 {
-
     /**
      * Fetch the document view as an escaped URL and solve relative URLs.
      *
@@ -29,6 +28,10 @@ class Link extends AbstractBlock
         }
 
         $url = PrismicLink::asUrl($context, $this->getLinkResolver() ?? '');
+
+        if (!$url) {
+            return '';
+        }
 
         return $this->_escaper->escapeUrl($this->replaceRelativeUrl($url));
     }
