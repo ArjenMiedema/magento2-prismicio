@@ -13,6 +13,6 @@
         <add id="Elgentos_PrismicIO::routes_index" title="Routes"
              module="Elgentos_PrismicIO" resource="Elgentos_PrismicIO::routes"
              parent="Elgentos_PrismicIO::routes" sortOrder="10"
-             action="prismicio/routes"/>
+             action="prismicio/route/index"/>
     </menu>
 </config>

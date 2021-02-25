@@ -14,7 +14,7 @@ use Magento\Framework\Model\AbstractModel;
 
 class Store extends AbstractModel implements StoreInterface, IdentityInterface
 {
-    private const CACHE_TAG = 'elgentos_prismicio_route_store';
+    private const CACHE_TAG = 'prismicio_route_store';
 
     /**
      * @return void

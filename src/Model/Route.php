@@ -21,7 +21,7 @@ use Magento\Framework\Registry;
 
 class Route extends AbstractModel implements RouteInterface, IdentityInterface
 {
-    public const CACHE_TAG = 'elgentos_prismicio_route',
+    public const CACHE_TAG = 'prismicio_route',
         STORE_IDS          = '_store_ids';
 
     /** @var CollectionFactory */
@@ -45,7 +45,14 @@ class Route extends AbstractModel implements RouteInterface, IdentityInterface
         AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+        parent::__construct(
+            $context,
+            $registry,
+            $resource,
+            $resourceCollection,
+            $data
+        );
+
         $this->storeCollectionFactory = $storeCollectionFactory;
     }
 
@@ -54,7 +61,7 @@ class Route extends AbstractModel implements RouteInterface, IdentityInterface
      *
      * @return void
      */
-    protected function _construct()
+    protected function _construct(): void
     {
         $this->_init('Elgentos\PrismicIO\Model\ResourceModel\Route');
     }

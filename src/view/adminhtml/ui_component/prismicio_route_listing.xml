@@ -8,7 +8,7 @@
          xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">prismicio_routes_listing.prismicio_routes_listing_data_source</item>
+            <item name="provider" xsi:type="string">prismicio_route_listing.prismicio_route_listing_data_source</item>
         </item>
     </argument>
     <settings>
@@ -19,12 +19,12 @@
                 <label translate="true">Add New Route</label>
             </button>
         </buttons>
-        <spinner>prismicio_routes_columns</spinner>
+        <spinner>prismicio_route_columns</spinner>
         <deps>
-            <dep>prismicio_routes_listing.prismicio_routes_listing_data_source</dep>
+            <dep>prismicio_route_listing.prismicio_route_listing_data_source</dep>
         </deps>
     </settings>
-    <dataSource name="prismicio_routes_listing_data_source"
+    <dataSource name="prismicio_route_listing_data_source"
                 component="Magento_Ui/js/grid/provider">
         <settings>
             <storageConfig>
@@ -35,9 +35,9 @@
         <aclResource>Elgentos_PrismicIO::routes</aclResource>
         <dataProvider
                 class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider"
-                name="prismicio_routes_listing_data_source">
+                name="prismicio_route_listing_data_source">
             <settings>
-                <requestFieldName>id</requestFieldName>
+                <requestFieldName>route_id</requestFieldName>
                 <primaryFieldName>route_id</primaryFieldName>
             </settings>
         </dataProvider>
@@ -87,7 +87,7 @@
         </massaction>
         <paging name="listing_paging"/>
     </listingToolbar>
-    <columns name="prismicio_routes_columns">
+    <columns name="prismicio_route_columns">
         <selectionsColumn name="ids">
             <settings>
                 <indexField>route_id</indexField>

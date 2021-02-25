@@ -8,7 +8,9 @@ declare(strict_types=1);
 
 namespace Elgentos\PrismicIO\Ui\Component\Routes\Column;
 
-class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
+use Magento\Ui\Component\Listing\Columns\Column;
+
+class PageActions extends Column
 {
     /**
      * Prepare the data source
@@ -17,23 +19,23 @@ class PageActions extends \Magento\Ui\Component\Listing\Columns\Column
      *
      * @return array
      */
-    public function prepareDataSource(array $dataSource)
+    public function prepareDataSource(array $dataSource): array
     {
-        if (isset($dataSource["data"]["items"])) {
-            foreach ($dataSource["data"]["items"] as & $item) {
-                $name = $this->getData("name");
-                $id   = "X";
+        if (isset($dataSource['data']['items'])) {
+            foreach ($dataSource['data']['items'] as & $item) {
+                $name = $this->getData('name');
+                $id   = 'X';
 
-                if (isset($item["route_id"])) {
-                    $id = $item["route_id"];
+                if (isset($item['route_id'])) {
+                    $id = $item['route_id'];
                 }
 
-                $item[$name]["view"] = [
-                    "href" => $this->getContext()->getUrl(
-                        "prismicio/routes/edit",
-                        ["route_id" => $id]
+                $item[$name]['view'] = [
+                    'href' => $this->getContext()->getUrl(
+                        'prismicio/route/edit',
+                        ['route_id' => $id]
                     ),
-                    "label" => __("Edit")
+                    'label' => __('Edit')
                 ];
             }
         }

@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Elgentos\PrismicIO\Tests\Block\Dom;
 
-use Elgentos\PrismicIO\Block\Dom\ClickableLink;
+use Elgentos\PrismicIO\Block\Dom\Link;
 use Elgentos\PrismicIO\ViewModel\DocumentResolver;
 use Elgentos\PrismicIO\ViewModel\LinkResolver;
 use Magento\Framework\View\Element\Template\Context;
@@ -18,7 +18,7 @@ use stdClass;
 /**
  * @coversDefaultClass \Elgentos\PrismicIO\BLock\Dom\ClickableLink
  */
-class ClickableLinkTest extends TestCase
+class LinkTest extends TestCase
 {
     /**
      * @covers ::fetchDocumentView
@@ -28,7 +28,7 @@ class ClickableLinkTest extends TestCase
     public function testFetchDocumentView(): void
     {
         $documentResolver = $this->createMock(DocumentResolver::class);
-        $subject          = new ClickableLink(
+        $subject          = new Link(
             $this->createMock(Context::class),
             $documentResolver,
             $this->createMock(LinkResolver::class)
@@ -38,9 +38,6 @@ class ClickableLinkTest extends TestCase
             ->method('getContext')
             ->willReturn(new stdClass());
 
-        $subject->setData('link_title', 'Test Link');
-        $expected = '<a href="">Test Link</a>';
-
-        $this->assertEquals($expected, $subject->fetchDocumentView());
+        $this->assertEquals('', $subject->fetchDocumentView());
     }
 }

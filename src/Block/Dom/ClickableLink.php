@@ -23,7 +23,10 @@ class ClickableLink extends Link
     public function fetchDocumentView(): string
     {
         return '<a href="' . parent::fetchDocumentView() . '">' .
-            ($this->getData('link_title') ?: __('Click here')) .
+            (
+                $this->getData('link_title')
+                    ?: __('Click here')
+            ) .
             '</a>';
     }
 }
